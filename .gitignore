@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Third-party repos cloned locally (VGGT, Open-d4rt, tapnet, co-tracker)
+third_party/
+vggt/
+Open-d4rt/
+tapnet/
+co-tracker/
+
+# Data & benchmarks (large — download separately)
+data/
+datasets/
+tapvid/
+tapvid3d/
+*.npz
+*.pkl
+*.mp4
+*.avi
+
+# Model weights & caches
+checkpoints/
+weights/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+cache/
+.cache/
+features_cache/
+.huggingface/
+
+# Experiment outputs
+outputs/
+results/
+runs/
+logs/
+wandb/
+lightning_logs/
+
+# Secrets
+.env
+*.key
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Claude Code local settings
+.claude/settings.local.json

@@ -63,6 +63,69 @@ Each reference paper has a dedicated markdown document detailing its technical f
 
 ---
 
+## ⚙️ Environment Setup
+
+Requires **Python 3.12** (3.10+ should also work). `requirements.txt` targets **PyTorch built for CUDA 12.6**, so a GPU run needs an NVIDIA GPU and driver. Without one, PyTorch still imports but runs on CPU only.
+
+### 1. Create the virtual environment
+
+| OS | Command |
+| :--- | :--- |
+| **Linux** | `python3 -m venv .venv` |
+| **macOS** | `python3 -m venv .venv` |
+| **Windows** (PowerShell / cmd) | `py -3.12 -m venv .venv` |
+
+### 2. Activate it
+
+| OS / shell | Command |
+| :--- | :--- |
+| **Linux / macOS** (bash, zsh) | `source .venv/bin/activate` |
+| **Linux / macOS** (fish) | `source .venv/bin/activate.fish` |
+| **Windows** (PowerShell) | `.venv\Scripts\Activate.ps1` |
+| **Windows** (cmd) | `.venv\Scripts\activate.bat` |
+
+> On Windows PowerShell, if activation is blocked, run once:
+> `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
+
+Deactivate at any time with `deactivate`.
+
+### 3. Install the dependencies
+
+```bash
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+> **macOS:** CUDA is not available. Remove the `--extra-index-url` line from `requirements.txt` before installing; PyTorch will use CPU (or Apple `mps`).
+> **Google Colab:** `torch` and `torchvision` are preinstalled with CUDA. Remove those two lines from `requirements.txt` before installing.
+
+### 4. Check the installation
+
+```bash
+python -c "import torch; print(torch.__version__, 'cuda:', torch.cuda.is_available())"
+```
+
+### Optional: faster setup with `uv`
+
+```bash
+uv venv --python 3.12 .venv
+uv pip install -r requirements.txt   # works on Linux, macOS and Windows
+```
+
+### 5. Third-party code (not on PyPI)
+
+Install from source, as listed at the bottom of `requirements.txt`:
+
+```bash
+pip install git+https://github.com/facebookresearch/vggt
+git clone https://github.com/Lijiaxin0111/Open-d4rt third_party/Open-d4rt
+pip install git+https://github.com/google-deepmind/tapnet
+```
+
+`third_party/`, `.venv/`, datasets, checkpoints and cached features are git-ignored.
+
+---
+
 ## 🔗 Official Code Repositories
 - **TAP-Vid:** https://github.com/google-deepmind/tapnet/blob/main/tapnet/tapvid/README.md
 - **TAP-Vid 3D:** https://tapvid3d.github.io/

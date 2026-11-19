@@ -1,0 +1,37 @@
+# Python 3.12 — PyTorch built for CUDA 12.6 (requires an NVIDIA GPU + driver to run on GPU).
+# On Google Colab, torch/torchvision are preinstalled with CUDA: skip those two lines there.
+--extra-index-url https://download.pytorch.org/whl/cu126
+
+# Core
+torch>=2.5
+torchvision>=0.20
+numpy>=1.26
+scipy
+einops
+safetensors
+huggingface_hub
+
+# Vision / IO
+opencv-python
+Pillow
+imageio
+imageio-ffmpeg
+matplotlib
+
+# Models & lightweight training (DINOv3 baselines, LoRA, AMP)
+transformers>=4.56
+peft
+accelerate
+
+# Data / experiments
+pandas
+tqdm
+pyyaml
+jupyterlab
+ipykernel
+
+# Not on PyPI — install from source (see README "Official Code Repositories"):
+#   VGGT    : pip install git+https://github.com/facebookresearch/vggt
+#   OpenD4RT: git clone https://github.com/Lijiaxin0111/Open-d4rt
+#   TAP-Vid : pip install git+https://github.com/google-deepmind/tapnet  (metrics)
+#   CoTracker3: loaded via torch.hub (facebookresearch/co-tracker)
