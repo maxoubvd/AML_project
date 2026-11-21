@@ -64,4 +64,9 @@ Mean visible-point EPE increased across successive 16-frame intervals: 0.3948, 0
 In Juggle, EPE immediately before disappearance was 0.0837 and at reappearance was 0.0831 across 14 reappearance events. In Apartment, always-visible points had EPE 0.5185 (196 points), compared with 0.3172 for 99 points occluded at least once, evaluated on visible frames. Neither comparison establishes occlusion as a failure mode.
 
 ### Interpretation
-The experiments identify sequence-length degradation and substantial errors on a subset of Apartment points. Static-versus-dynamic differences remain inconclusive because only two Apartment queries were classified as dynamic. A third independent failure mechanism has not yet been established.
+The experiments identify sequence-length degradation and substantial errors on a subset of Apartment points. Static-versus-dynamic differences remain inconclusive because only two Apartment queries were classified as dynamic. A third candidate involving spatially dependent tracking errors has been identified, although its independence and generalizability remain unconfirmed.
+
+## Candidate Failure Case 3: Spatially Dependent Tracking Errors
+
+In the Apartment sequence (64 frames, 295 evaluated queries), mean per-point EPE was strongly correlated with initial world-coordinate Y (r = -0.8934) and Z (r = 0.8046), but less strongly with X (r = 0.2216). Points in the higher-Z half had mean EPE 0.7144, compared with 0.1713 for the lower-Z half (approximately 4.2 times higher). Initial Y and Z were themselves correlated (r = -0.7174). These results indicate spatially concentrated tracking errors in this sequence, but do not establish a causal relationship, a camera-depth effect, or generalization to other sequences. This is a candidate failure case requiring further validation.
+
