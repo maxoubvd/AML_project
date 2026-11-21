@@ -70,3 +70,30 @@ The experiments identify sequence-length degradation and substantial errors on a
 
 In the Apartment sequence (64 frames, 295 evaluated queries), mean per-point EPE was strongly correlated with initial world-coordinate Y (r = -0.8934) and Z (r = 0.8046), but less strongly with X (r = 0.2216). Points in the higher-Z half had mean EPE 0.7144, compared with 0.1713 for the lower-Z half (approximately 4.2 times higher). Initial Y and Z were themselves correlated (r = -0.7174). These results indicate spatially concentrated tracking errors in this sequence, but do not establish a causal relationship, a camera-depth effect, or generalization to other sequences. This is a candidate failure case requiring further validation.
 
+## Qualitative Failure Examples (Apartment, 64 Frames)
+
+Three examples were selected from the Apartment sequence to illustrate large 3D tracking errors produced by Open-D4RT. Green markers indicate ground-truth positions, while red markers indicate predicted positions projected onto the corresponding video frames. Predictions were globally scale-aligned before evaluation.
+
+### Example 1: Point 178, Frame 49
+
+![Failure example 1](d4rt_examples/failure_example_1.png)
+
+The predicted point is displaced to the right of its ground-truth location near the dining table. The 3D endpoint error (EPE) is **2.376**. This illustrates a substantial 3D tracking error despite a relatively small displacement in the image.
+
+### Example 2: Point 40, Frame 48
+
+![Failure example 2](d4rt_examples/failure_example_2.png)
+
+A similar tracking discrepancy appears near the dining table. The predicted position is shifted to the right of the ground truth, with a 3D EPE of **2.283**. This provides a second example of the identified tracking inaccuracy.
+
+### Example 3: Point 36, Frame 63
+
+![Failure example 3](d4rt_examples/failure_example_3.png)
+
+The ground-truth and predicted positions differ near the upper-left region of the image. The 3D EPE is **1.371**, showing that a relatively small 2D displacement can accompany a larger 3D error.
+
+### Discussion
+
+These examples illustrate large tracking errors on selected points in the Apartment sequence. The first two examples are visually similar, while the third concerns a different image region. They support the observation that tracking errors are unevenly distributed across points.
+
+The examples were deliberately selected for high error and therefore do not represent average model performance. They demonstrate a limitation in this particular sequence, rather than establishing a general failure mode across datasets.
