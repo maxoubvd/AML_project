@@ -51,3 +51,17 @@ Candidate limitation 1: Performance degradation on longer evaluated sequences. T
 | EPE (lower is better) | 0.4460 | 0.1001 |
 
 Both groups were evaluated using the same global scale alignment. Static points showed lower APD and higher EPE in this sequence. However, the dynamic group contains only two queries, so this is a preliminary observation rather than a confirmed general limitation of D4RT. Further evaluation on sequences with balanced static and dynamic queries is needed.
+
+## Additional Failure Analysis (64 Frames)
+
+### Apartment: Large Tracking Errors
+Among 295 evaluated points, 133 had mean EPE above 0.3, 123 above 0.5, and 13 above 1.0. Median point EPE was 0.2361, while the maximum was 1.2931. This indicates substantial tracking errors for a subset of points in the Apartment sequence.
+
+### Apartment: Temporal Error
+Mean visible-point EPE increased across successive 16-frame intervals: 0.3948, 0.4118, 0.4841, and 0.6333. This is evidence of increasing tracking error within this particular sequence, but overlaps with the longer-sequence limitation.
+
+### Occlusion Analysis
+In Juggle, EPE immediately before disappearance was 0.0837 and at reappearance was 0.0831 across 14 reappearance events. In Apartment, always-visible points had EPE 0.5185 (196 points), compared with 0.3172 for 99 points occluded at least once, evaluated on visible frames. Neither comparison establishes occlusion as a failure mode.
+
+### Interpretation
+The experiments identify sequence-length degradation and substantial errors on a subset of Apartment points. Static-versus-dynamic differences remain inconclusive because only two Apartment queries were classified as dynamic. A third independent failure mechanism has not yet been established.
