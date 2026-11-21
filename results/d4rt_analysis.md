@@ -97,3 +97,18 @@ The ground-truth and predicted positions differ near the upper-left region of th
 These examples illustrate large tracking errors on selected points in the Apartment sequence. The first two examples are visually similar, while the third concerns a different image region. They support the observation that tracking errors are unevenly distributed across points.
 
 The examples were deliberately selected for high error and therefore do not represent average model performance. They demonstrate a limitation in this particular sequence, rather than establishing a general failure mode across datasets.
+
+## TAPVid-3D Metrics (Apartment, 64 Frames)
+
+The official TAPVid-3D metric implementation was applied to 295 queries across 64 frames of the Apartment sequence. Ground-truth and predicted 3D tracks were transformed from world coordinates into camera coordinates. Predictions had previously been globally scale-aligned using the evaluation script; therefore, the TAPVid-3D function was called with scaling='none'.
+
+| Metric | Result |
+|---|---:|
+| 3D Average Jaccard (3D-AJ) | 3.04% |
+| Average Points Within Threshold | 5.71% |
+| Occlusion Accuracy (OA) | 93.78% |
+
+The high occlusion accuracy contrasts with the low 3D tracking accuracy, indicating that the model identifies visibility substantially better than it estimates precise 3D point locations in this sequence. The ground-truth visible fraction was 86.14%, so the OA value should also be interpreted in light of class imbalance.
+
+These results describe a single WorldTrack Apartment sequence, not the complete TAPVid-3D benchmark. The predictions were pre-aligned using the project's global scaling procedure rather than the official median scaling procedure. Consequently, these values should not be presented as directly comparable official benchmark scores. The earlier APD(global)=54.29% uses different thresholds and must not be directly compared with the 5.71% average points-within-threshold reported here.
+
