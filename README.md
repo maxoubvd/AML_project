@@ -126,6 +126,24 @@ pip install git+https://github.com/google-deepmind/tapnet
 
 ---
 
+## ▶️ TAP-Vid DAVIS scripts (VGGT vs CoTracker3)
+
+The scripts in `scripts/` expect the TAP-Vid DAVIS pickle at `data/tapvid_davis/tapvid_davis/tapvid_davis.pkl` (download it from the [TAP-Vid repository](https://github.com/google-deepmind/tapnet/blob/main/tapnet/tapvid/README.md)) and must be run from the repository root. They select `cuda`, then `mps`, then `cpu`.
+
+| Script | Purpose |
+| :--- | :--- |
+| `scripts/inspect_tapvid.py` | Print the dataset structure (videos, fields, shapes) |
+| `scripts/preview_davis.py` | Plot the ground-truth query points on `breakdance` frames |
+| `scripts/test_cotracker_davis.py` | Run CoTracker3 on `breakdance`, save predictions to `results/davis/breakdance/` |
+| `scripts/test_vggt_davis.py` | Run the VGGT tracking head on the first 18 frames of `breakdance`, save predictions to the same folder |
+| `scripts/analyze_visibility.py` | Compare predicted and ground-truth visibility (needs the CoTracker3 outputs) |
+| `scripts/visualize_point_failure.py` | Render the failure of query point 4 (needs the CoTracker3 outputs) |
+| `scripts/test_chair.py` | VGGT depth on `images/chair/`, writes `results/depth_maps_chair.png` |
+
+Run order: `test_cotracker_davis.py` and `test_vggt_davis.py` first, since they produce the `.npy` files (git-ignored) that `analyze_visibility.py`, `visualize_point_failure.py` and `notebooks/03_vggt/02_vggt_vs_cotracker.ipynb` read.
+
+---
+
 ## 🔗 Official Code Repositories
 - **TAP-Vid:** https://github.com/google-deepmind/tapnet/blob/main/tapnet/tapvid/README.md
 - **TAP-Vid 3D:** https://tapvid3d.github.io/
