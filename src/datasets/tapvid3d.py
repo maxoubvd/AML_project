@@ -48,4 +48,3 @@ def load_tapvid3d(path, subset_file=None):
             "gt_visible": visible,
             "intrinsics": intrinsics,
         }
-        
