@@ -3,8 +3,9 @@
 --extra-index-url https://download.pytorch.org/whl/cu126
 
 # Core
-torch>=2.5
-torchvision>=0.20
+# Upper bounds: torch 2.15 has no cu126 wheel, so pip would fall back to the CPU-only PyPI build on Windows.
+torch>=2.5,<2.15
+torchvision>=0.20,<0.30
 numpy>=1.26
 scipy
 einops

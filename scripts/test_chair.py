@@ -7,18 +7,22 @@ from pathlib import Path
 from vggt.models.vggt import VGGT
 from vggt.utils.load_fn import load_and_preprocess_images
 
-# Paths
-VGGT_DIR = Path(
-    "/Users/alex_dbrz/Work/TELECOM/3A-TURIN/Advanced Machine Learning/PROJET/vggt"
-)
-IMAGE_DIR = VGGT_DIR / "test_images"
+# Paths (relative to the repository root)
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+IMAGE_DIR = PROJECT_ROOT / "images" / "chair"
+OUTPUT_PATH = PROJECT_ROOT / "results" / "depth_maps_chair.png"
 
 # Device
-device = "mps" if torch.backends.mps.is_available() else "cpu"
+if torch.cuda.is_available():
+    device = "cuda"
+elif torch.backends.mps.is_available():
+    device = "mps"
+else:
+    device = "cpu"
 print(f"Using device: {device}")
 
 # Load images
-image_paths = sorted(IMAGE_DIR.glob("*.jpeg"))
+image_paths = sorted(IMAGE_DIR.glob("*.jpg"))
 print(f"Found {len(image_paths)} images")
 
 images = load_and_preprocess_images(
@@ -59,7 +63,8 @@ for i, ax in enumerate(axes):
     ax.axis("off")
 
 plt.tight_layout()
-plt.savefig("depth_maps_chair.png", dpi=150)
+OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+plt.savefig(OUTPUT_PATH, dpi=150)
 plt.show()
 
-print("Saved depth maps to depth_maps_chair.png")
+print(f"Saved depth maps to {OUTPUT_PATH}")
