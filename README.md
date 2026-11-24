@@ -149,3 +149,79 @@ Run order: `test_cotracker_davis.py` and `test_vggt_davis.py` first, since they 
 - **TAP-Vid 3D:** https://tapvid3d.github.io/
 - **VGGT:** https://github.com/facebookresearch/vggt
 - **OpenD4RT:** https://github.com/Lijiaxin0111/Open-d4rt
+## Shared Evaluation Framework
+
+The shared evaluation framework provides common dataset loaders, tracker interfaces and official evaluation metrics for Q6, Q10 and Q13.
+
+### Dependencies
+
+Install the additional evaluation dependencies:
+
+```bash
+python -m pip install -r requirements-eval.txt
+```
+
+The evaluation environment was tested with Python 3.11.
+
+### Dataset Paths
+
+- TAP-Vid DAVIS: `data/tapvid_davis/tapvid_davis/tapvid_davis.pkl`
+- TAPVid-3D: `data/tapvid3d/`
+
+The 3D loader supports the ADT, PStudio and DriveTrack data formats.
+
+### Running Evaluation
+
+Run all commands from the repository root.
+
+**2D evaluation:**
+
+```bash
+python -m scripts.evaluate --task 2d --data data/tapvid_davis/tapvid_davis/tapvid_davis.pkl --tracker cotracker3
+```
+
+**3D evaluation:**
+
+```bash
+python -m scripts.evaluate --task 3d --data data/tapvid3d --tracker gt
+```
+
+Available trackers:
+
+- `gt`: Ground-truth sanity check.
+- `static`: Static baseline.
+- `cotracker3`: CoTracker3 offline baseline (2D only).
+
+Use `--subset` with a subset text file to evaluate selected sequences.
+
+### Evaluation Protocol
+
+- Query-first protocol for both benchmarks.
+- 2D coordinates rescaled to 256 × 256 for evaluation.
+- 3D trajectories expressed in per-frame camera coordinates.
+- Official median scaling for 3D evaluation.
+- 2D metrics: AJ, APD (average points within threshold), OA.
+- 3D metrics: 3D-AJ, APD_3D, OA.
+
+Per-sequence scores and their mean are saved in `results/<task>/<tracker>.csv`.
+
+### Validation
+
+- Ground-truth sanity checks: all metrics equal to 1.0.
+- Static baselines: successfully tested in 2D and 3D.
+- CoTracker3: evaluated on all 30 DAVIS sequences.
+- ADT, PStudio and DriveTrack: loader compatibility tested.
+
+CoTracker3 DAVIS results:
+
+| AJ | APD | OA |
+|---:|---:|---:|
+| 62.56% | 76.88% | 88.17% |
+
+### Current Limitations
+
+ADT and PStudio tests used local WorldTrack release samples whose official benchmark split membership has not been verified. DriveTrack was tested using one official minival sequence.
+
+The 3D static baseline assumes unit depth. The query-first protocol may differ from the original stored TAPVid-3D queries.
+
+The dependency versions were tested in the existing environment but have not yet been validated through a fresh installation.
