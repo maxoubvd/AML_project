@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "experiments": [
+    {
+      "file": "experiment_001.npz",
+      "selection": {
+        "start_frame": 5,
+        "frame_stride": 1,
+        "max_frames": 20,
+        "point_ids": null,
+        "max_points": null,
+        "notes": "",
+        "name": "experiment_001",
+        "sequence": "dance-twirl"
+      },
+      "queued_name": "experiment_001",
+      "frames": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "point_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ]
+    }
+  ]
+}

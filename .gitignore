@@ -39,9 +39,10 @@ cache/
 features_cache/
 .huggingface/
 
-# Experiment outputs
+# Experiment outputs (share analysis reports, not raw inference outputs)
 outputs/
-results/
+/results/*
+!/results/analysis/
 runs/
 logs/
 wandb/

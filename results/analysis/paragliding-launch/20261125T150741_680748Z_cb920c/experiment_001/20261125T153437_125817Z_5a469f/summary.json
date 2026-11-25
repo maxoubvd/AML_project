@@ -1,0 +1,118 @@
+{
+  "source_run": "/home/paul/Documents/Cours/Advanced Machine Learning/AML_project/results/vggt/20261125T150741_680748Z_cb920c/experiment_001",
+  "source_metadata": {
+    "status": "completed",
+    "created_utc": "2026-11-25T15:09:44.210521+00:00",
+    "export_path": "/home/paul/Documents/Cours/Advanced Machine Learning/AML_project/images/videos/paragliding-launch_11_31/experiment_001.npz",
+    "export_sha256": "1f009861a9c21ae4b0991c11e81d3edb1d8be4ee0aaac3e5f52e17e42e813486",
+    "export_metadata": {
+      "schema_version": 1,
+      "dataset": "TAP-Vid DAVIS",
+      "source_path": "/home/paul/Documents/Cours/Advanced Machine Learning/AML_project/tapvid_davis/tapvid_davis.pkl",
+      "created_utc": "2026-11-25T15:04:16.429685+00:00",
+      "selection": {
+        "start_frame": 11,
+        "frame_stride": 1,
+        "max_frames": 20,
+        "point_ids": null,
+        "max_points": null,
+        "notes": "",
+        "name": "experiment_001",
+        "sequence": "paragliding-launch"
+      },
+      "queued_name": "experiment_001"
+    },
+    "transform": {
+      "source_hw": [
+        480,
+        854
+      ],
+      "resized_hw": [
+        294,
+        518
+      ],
+      "input_hw": [
+        294,
+        518
+      ],
+      "crop_top": 0,
+      "mode": "crop"
+    },
+    "input_shape": [
+      20,
+      3,
+      294,
+      518
+    ],
+    "point_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      15,
+      16,
+      17,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ],
+    "query_protocol": "exploratory: first selected frame, visible and in-crop; not official TAP-Vid evaluation",
+    "vggt_checkout": "/home/paul/Documents/Cours/Advanced Machine Learning/vggt",
+    "vggt_git_revision": "a288dd0f14786c93483e45524328726ab7b1b4ce",
+    "project_git_revision": "37fc4ce24872d5553b28b0063863eecb425e6cc0",
+    "checkpoint_path": "/home/paul/.cache/torch/hub/checkpoints/model.pt",
+    "checkpoint_bytes": 5026874952,
+    "checkpoint_loader": "meta initialization + mmap + assign=True",
+    "checkpoint_mtime_ns": 1795096129212050768,
+    "device": "cpu",
+    "parameter_dtype": "torch.float32",
+    "autocast_dtype": null,
+    "gpu": null,
+    "torch_version": "2.15.0+cu132",
+    "cuda_build": "13.2",
+    "inference_and_cpu_copy_seconds": 119.24024682900017
+  },
+  "visibility_threshold": 0.5,
+  "point_groups": {},
+  "notes": "",
+  "position_metric": "Euclidean error after mapping coordinates to canonical 256x256; query frame, GT-occluded and out-of-crop points excluded; nonfinite predictions penalized with infinity",
+  "visibility_metric": "Agreement at configured threshold; query frame and GT-visible/out-of-crop positions excluded; nonfinite scores count as incorrect",
+  "protocol": "Exploratory, not official TAP-Vid benchmark evaluation",
+  "saved_figures": [
+    "error_by_frame",
+    "error_by_point",
+    "overlay_frame_30",
+    "point_20_trajectory"
+  ],
+  "player": {
+    "file": "tracking.html",
+    "error_unit": "original video pixels",
+    "viewing_fps": 10.0
+  },
+  "summary": {
+    "points": 23,
+    "scored_pairs": 424,
+    "mean_epe_256": 34.9016227722168,
+    "median_epe_256": 34.060821533203125,
+    "max_epe_256": 79.44512176513672,
+    "mean_epe_source_px": 114.51215783886752,
+    "nonfinite_positions": 0,
+    "visibility_pairs": 437,
+    "visibility_agreement": 0.8741418764302059,
+    "always_visible_baseline": 0.9702517162471396,
+    "nonfinite_visibility": 0
+  }
+}
