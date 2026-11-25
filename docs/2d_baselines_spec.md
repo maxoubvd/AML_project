@@ -1,6 +1,6 @@
 # Branch `feat/2d-baselines`: mandatory 2D baselines (Q4)
 
-**Owner:** TBD (suggested: Maxime) · **Base:** `main` · **Merge:** PR into `main`
+**Owner:** Maxime · **Base:** `main` · **Merge:** PR into `main`
 
 ## Goal
 

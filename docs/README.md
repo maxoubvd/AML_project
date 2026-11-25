@@ -7,7 +7,7 @@ Each branch starts from `main`, follows its spec, and merges back through a PR. 
 | `feat/eval-common` (merged) | [eval_common_spec.md](eval_common_spec.md) | — | Mohammadreza | — |
 | `exp/vggt_non_rigid` | [step1_subset_spec.md](step1_subset_spec.md), part A | Q1, Q2 | Paul | — |
 | `feat/step1-d4rt` | [step1_subset_spec.md](step1_subset_spec.md), part B | Q1, Q2 | Mohammadreza | — |
-| `feat/2d-baselines` | [2d_baselines_spec.md](2d_baselines_spec.md) | Q4 | TBD | — |
+| `feat/2d-baselines` | [2d_baselines_spec.md](2d_baselines_spec.md) | Q4 | Maxime | — |
 | `feat/2d-models` | [2d_models_spec.md](2d_models_spec.md) | Q3, Q5, Q6 | TBD | `feat/2d-baselines` (for Q5/Q6 only) |
 | `feat/depth-lifting` | [depth_lifting_spec.md](depth_lifting_spec.md) | Q7 | TBD | — |
 | `feat/3d-tracking` | [3d_tracking_spec.md](3d_tracking_spec.md) | Q8, Q9, Q10 | TBD | 2d-baselines, 2d-models, depth-lifting |
