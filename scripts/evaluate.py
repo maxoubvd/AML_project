@@ -1,11 +1,44 @@
 import argparse
 import pandas as pd
 from pathlib import Path
-from src.tracking.cotracker import CoTracker3
 from src.datasets.tapvid import load_tapvid
 from src.datasets.tapvid3d import load_tapvid3d
-from src.tracking.base import StaticTracker2D, StaticTracker3D
 from src.evaluation.metrics import evaluate_2d, evaluate_3d
+
+
+def _static_2d():
+    from src.tracking.base import StaticTracker2D
+    return StaticTracker2D()
+
+
+def _static_3d():
+    from src.tracking.base import StaticTracker3D
+    return StaticTracker3D()
+
+
+def _cotracker3():
+    from src.tracking.cotracker import CoTracker3
+    return CoTracker3()
+
+
+def _lk():
+    from src.models.baselines.lk import LKTracker
+    return LKTracker()
+
+
+# Tracker registry: name -> factory. Imports are lazy so that a tracker's
+# dependencies (torch.hub, DINOv3, VGGT, ...) load only when it is used.
+# To add a tracker, add one line here.
+TRACKERS = {
+    "2d": {
+        "static": _static_2d,
+        "cotracker3": _cotracker3,
+        "lk": _lk,
+    },
+    "3d": {
+        "static": _static_3d,
+    },
+}
 
 
 def main():
@@ -13,32 +46,29 @@ def main():
     parser.add_argument("--task", choices=["2d", "3d"], required=True)
     parser.add_argument("--data", required=True)
     parser.add_argument("--subset", default=None)
-    parser.add_argument("--tracker", choices=["static", "gt", "cotracker3"], default="static")
+    all_names = sorted({"gt"} | {n for task in TRACKERS.values() for n in task})
+    parser.add_argument("--tracker", choices=all_names, default="static")
     args = parser.parse_args()
-    if args.task == "3d" and args.tracker == "cotracker3":
-        parser.error("CoTracker3 only supports 2D tracking")
-       # Select dataset and tracker
+
+    if args.tracker != "gt" and args.tracker not in TRACKERS[args.task]:
+        parser.error(f"Tracker '{args.tracker}' is not available for the {args.task} task")
+
+    # Select dataset and tracker
     if args.task == "2d":
         samples = load_tapvid(args.data, args.subset)
-
-        if args.tracker == "cotracker3":
-            tracker = CoTracker3()
-        else:
-            tracker = StaticTracker2D()
-
         evaluate = evaluate_2d
-
     else:
         samples = load_tapvid3d(args.data, args.subset)
-        tracker = StaticTracker3D()
         evaluate = evaluate_3d
+
+    tracker = None if args.tracker == "gt" else TRACKERS[args.task][args.tracker]()
 
     results = []
 
     # Evaluate each sequence
     for sample in samples:
 
-        if args.tracker == "gt":
+        if tracker is None:
             tracks = sample["gt_tracks"]
             visible = sample["gt_visible"]
 
@@ -65,11 +95,13 @@ def main():
     mean = df.mean(numeric_only=True)
     df.loc[len(df)] = {"name": "mean", **mean.to_dict()}
 
-    # Save results
+    # Save results: results/<task>/<tracker>[_<subset>].csv, so runs on
+    # different subsets do not overwrite each other
     output = Path("results") / args.task
     output.mkdir(parents=True, exist_ok=True)
 
-    df.to_csv(output / f"{args.tracker}.csv", index=False)
+    stem = args.tracker if args.subset is None else f"{args.tracker}_{Path(args.subset).stem}"
+    df.to_csv(output / f"{stem}.csv", index=False)
     print(mean)
 
 
