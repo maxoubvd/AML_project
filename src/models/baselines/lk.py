@@ -42,7 +42,7 @@ class LKTracker(Tracker2D):
         max_iters, eps: stopping criteria of the iterative LK solver.
 
     Defaults were chosen by grid search on configs/subsets/davis_tuning.txt
-    (scripts/tune_lk.py), outside the evaluation subsets.
+    (scripts/tune.py), outside the evaluation subsets.
     """
 
     name = "lk"

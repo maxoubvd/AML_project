@@ -26,6 +26,26 @@ def _lk():
     return LKTracker()
 
 
+def _dino_sim():
+    from src.models.baselines.dino_similarity import DinoSimilarityTracker
+    return DinoSimilarityTracker()
+
+
+def _dino_proto():
+    from src.models.baselines.dino_prototype import DinoPrototypeTracker
+    return DinoPrototypeTracker()
+
+
+def _lk_dino():
+    from src.models.baselines.lk_dino import LKDinoTracker
+    return LKDinoTracker()
+
+
+def _dino_cv():
+    from src.models.baselines.dino_cv import DinoConstantVelocityTracker
+    return DinoConstantVelocityTracker()
+
+
 # Tracker registry: name -> factory. Imports are lazy so that a tracker's
 # dependencies (torch.hub, DINOv3, VGGT, ...) load only when it is used.
 # To add a tracker, add one line here.
@@ -34,6 +54,10 @@ TRACKERS = {
         "static": _static_2d,
         "cotracker3": _cotracker3,
         "lk": _lk,
+        "dino_sim": _dino_sim,
+        "dino_proto": _dino_proto,
+        "lk_dino": _lk_dino,
+        "dino_cv": _dino_cv,
     },
     "3d": {
         "static": _static_3d,
