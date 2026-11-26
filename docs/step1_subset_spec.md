@@ -45,7 +45,7 @@ CoTracker3 is the control: if it also drops on the non-rigid subset, the gap com
 
 1. **Move from WorldTrack to TAPVid-3D:** a few ADT / PStudio / DriveTrack sequences loaded with `src/datasets/tapvid3d.py`, scored with `evaluate_3d` on **raw** predictions (official median scaling). The earlier WorldTrack numbers were pre-aligned and are not comparable.
 2. **Sanity check:** compare with Table 4 of the D4RT paper. A large gap means our findings apply to Open-D4RT, and the report must say so.
-3. **Test the hypothesis:** frame-to-frame jitter (second difference of 3D positions) vs GT and vs CoTracker3 + depth, split into static and moving points.
+3. **Test the hypothesis:** frame-to-frame jitter (second difference of 3D positions) of D4RT vs the jitter of the GT tracks, split into static and moving points. Comparing with the GT is enough to test the claim, so this does not wait for other branches. Add the comparison with CoTracker3 + depth later, once `feat/depth-lifting` is merged.
 4. **Decision rule:** keep a claim only if it holds on several sequences; otherwise drop it and say so.
 5. 3 qualitative examples with 3D-AJ / APD_3D / OA.
 
