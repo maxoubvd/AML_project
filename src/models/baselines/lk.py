@@ -40,11 +40,14 @@ class LKTracker(Tracker2D):
         max_level: number of pyramid levels above full resolution (0 = no pyramid).
         fb_threshold: maximum forward-backward error, in pixels, for a visible point.
         max_iters, eps: stopping criteria of the iterative LK solver.
+
+    Defaults were chosen by grid search on configs/subsets/davis_tuning.txt
+    (scripts/tune_lk.py), outside the evaluation subsets.
     """
 
     name = "lk"
 
-    def __init__(self, win_size=21, max_level=3, fb_threshold=1.5, max_iters=30, eps=0.01):
+    def __init__(self, win_size=21, max_level=3, fb_threshold=2.0, max_iters=30, eps=0.01):
         self.fb_threshold = fb_threshold
         self.lk_params = dict(
             winSize=(win_size, win_size),
