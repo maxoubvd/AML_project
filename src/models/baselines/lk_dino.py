@@ -24,11 +24,14 @@ class LKDinoTracker(Tracker2D):
 
     LK gives sub-pixel precision and DINOv3 gives robustness to drift and
     recovery after short occlusions.
+
+    Defaults were chosen by grid search on configs/subsets/davis_tuning.txt
+    (scripts/tune.py), outside the evaluation subsets.
     """
 
     name = "lk_dino"
 
-    def __init__(self, sim_threshold=0.5, search_radius=3, tau=0.05, refine_radius=1,
+    def __init__(self, sim_threshold=0.85, search_radius=5, tau=0.01, refine_radius=1,
                  lk_kwargs=None, **feature_kwargs):
         self.sim_threshold = sim_threshold
         self.search_radius = search_radius

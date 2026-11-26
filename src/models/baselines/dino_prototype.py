@@ -27,12 +27,17 @@ class DinoPrototypeTracker(Tracker2D):
          of drifting if a wrong match is accepted.
 
     Visibility: the best similarity is above ``vis_threshold``.
+
+    Defaults were chosen by grid search on configs/subsets/davis_tuning.txt
+    (scripts/tune.py), outside the evaluation subsets.
+    The search selected neighbourhood=0 (the prototype starts as the single
+    query feature): averaging a neighbourhood did not help on the tuning set.
     """
 
     name = "dino_proto"
 
-    def __init__(self, vis_threshold=0.5, update_threshold=0.7, momentum=0.1, neighbourhood=0.5,
-                 tau=0.05, refine_radius=1, **feature_kwargs):
+    def __init__(self, vis_threshold=0.85, update_threshold=0.95, momentum=0.02, neighbourhood=0.0,
+                 tau=0.01, refine_radius=1, **feature_kwargs):
         self.vis_threshold = vis_threshold
         self.update_threshold = update_threshold
         self.momentum = momentum

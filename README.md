@@ -191,8 +191,11 @@ Available trackers:
 - `gt`: Ground-truth sanity check.
 - `static`: Static baseline.
 - `cotracker3`: CoTracker3 offline baseline (2D only).
+- `lk`, `dino_sim`, `dino_proto`, `lk_dino`, `dino_cv`: the mandatory 2D baselines (see below).
 
-Use `--subset` with a subset text file to evaluate selected sequences.
+Trackers are registered in the `TRACKERS` dict of `scripts/evaluate.py`; adding one takes one line.
+
+Use `--subset` with a subset text file to evaluate selected sequences. With `--subset`, the CSV is named `<tracker>_<subset>.csv`, so runs on different subsets do not overwrite each other.
 
 ### Evaluation Protocol
 
@@ -225,3 +228,30 @@ ADT and PStudio tests used local WorldTrack release samples whose official bench
 The 3D static baseline assumes unit depth. The query-first protocol may differ from the original stored TAPVid-3D queries.
 
 The dependency versions were tested in the existing environment but have not yet been validated through a fresh installation.
+---
+
+## 2D baselines (Step 2, Q4)
+
+The five mandatory non-learned baselines live in `src/models/baselines/` and implement `Tracker2D`. Each class docstring explains how the method works.
+
+| Tracker | Class | Method |
+| :--- | :--- | :--- |
+| `lk` | `LKTracker` | Pyramidal Lucas-Kanade (OpenCV), frame-to-frame chaining; visibility from the forward-backward error |
+| `dino_sim` | `DinoSimilarityTracker` | Global cosine-similarity search of the query's DINOv3 feature in every frame, soft-argmax refinement |
+| `dino_proto` | `DinoPrototypeTracker` | Same search with a prototype updated by EMA on confident matches (our definition of "prototype") |
+| `lk_dino` | `LKDinoTracker` | LK step, checked with DINOv3 similarity; local DINOv3 re-localisation when LK fails |
+| `dino_cv` | `DinoConstantVelocityTracker` | Constant-velocity prediction, local DINOv3 search around it |
+
+**DINOv3:** `facebook/dinov3-vits16-pretrain-lvd1689m` (gated: accept the license on Hugging Face, then `hf auth login`). Frames are resized to multiples of 16 (DAVIS: 480×848, a 30×53 patch grid). The L2-normalised last-layer patch features are cached per video in `cache/dinov3/` (git-ignored) and shared by the four DINOv3 baselines.
+
+**Tuning:** hyper-parameters were chosen by grid search on AJ over `configs/subsets/davis_tuning.txt` (camel, cows, horsejump-high, bike-packing, india) with `python -m scripts.tune --tracker <name> --data <davis.pkl>`. **These five sequences must not be part of any evaluation subset.** `configs/subsets/davis_no_tuning.txt` lists the 25 other DAVIS sequences.
+
+| Tracker | Hyper-parameters |
+| :--- | :--- |
+| `lk` | window 21 px, 3 pyramid levels, forward-backward threshold 2 px |
+| `dino_sim` | visibility threshold 0.85, soft-argmax temperature 0.01 |
+| `dino_proto` | visibility threshold 0.85, update threshold 0.95, EMA momentum 0.02, neighbourhood 0 |
+| `lk_dino` | similarity threshold 0.85, search radius 5 patches, temperature 0.01, LK as above |
+| `dino_cv` | visibility threshold 0.75, search radius 6 patches, temperature 0.01 |
+
+For reference, over 14 DAVIS sequences the cosine similarity of the best match has a median of 0.91 for visible points and 0.81 for occluded ones. This statistic was only used to set the range of the threshold grids (0.7–0.9); the values themselves were selected on the tuning subset.

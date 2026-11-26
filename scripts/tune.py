@@ -25,22 +25,22 @@ SEARCHES = {
         "fb_threshold": [1.0, 2.0, 4.0],
     }),
     "dino_sim": ("src.models.baselines.dino_similarity", "DinoSimilarityTracker", {
-        "vis_threshold": [0.3, 0.4, 0.5, 0.6, 0.7],
-        "tau": [0.02, 0.05, 0.1],
+        "vis_threshold": [0.7, 0.75, 0.8, 0.85, 0.9],
+        "tau": [0.01, 0.02],
     }),
     "dino_proto": ("src.models.baselines.dino_prototype", "DinoPrototypeTracker", {
-        "vis_threshold": [0.4, 0.5, 0.6],
-        "update_threshold": [0.6, 0.75, 0.9],
-        "momentum": [0.05, 0.2],
-        "neighbourhood": [0.25, 0.5],
+        "vis_threshold": [0.75, 0.8, 0.85],
+        "update_threshold": [0.85, 0.9, 0.95],
+        "momentum": [0.02, 0.05],
+        "neighbourhood": [0.0, 0.25],
     }),
     "lk_dino": ("src.models.baselines.lk_dino", "LKDinoTracker", {
-        "sim_threshold": [0.3, 0.4, 0.5, 0.6],
-        "search_radius": [2, 3, 5],
+        "sim_threshold": [0.6, 0.7, 0.8, 0.85],
+        "search_radius": [3, 5, 8],
     }),
     "dino_cv": ("src.models.baselines.dino_cv", "DinoConstantVelocityTracker", {
-        "vis_threshold": [0.3, 0.4, 0.5, 0.6],
-        "search_radius": [2, 3, 5],
+        "vis_threshold": [0.7, 0.75, 0.8, 0.85, 0.9],
+        "search_radius": [2, 3, 4],
     }),
 }
 

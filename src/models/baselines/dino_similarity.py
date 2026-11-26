@@ -26,11 +26,14 @@ class DinoSimilarityTracker(Tracker2D):
         tau: soft-argmax temperature.
         refine_radius: soft-argmax neighbourhood radius, in patches.
         **feature_kwargs: passed to DinoFeatures (model_name, scale, cache_dir).
+
+    Defaults were chosen by grid search on configs/subsets/davis_tuning.txt
+    (scripts/tune.py), outside the evaluation subsets.
     """
 
     name = "dino_sim"
 
-    def __init__(self, vis_threshold=0.5, tau=0.05, refine_radius=1, **feature_kwargs):
+    def __init__(self, vis_threshold=0.85, tau=0.01, refine_radius=1, **feature_kwargs):
         self.vis_threshold = vis_threshold
         self.tau = tau
         self.refine_radius = refine_radius

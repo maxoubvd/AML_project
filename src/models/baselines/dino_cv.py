@@ -22,11 +22,16 @@ class DinoConstantVelocityTracker(Tracker2D):
     an unchanged v (clipped to the image), so it can be found again when it
     reappears near the predicted path. Abrupt direction changes break the
     motion model.
+
+    Defaults were chosen by grid search on configs/subsets/davis_tuning.txt
+    (scripts/tune.py), outside the evaluation subsets.
+    The score kept rising with larger windows (closer to a global search),
+    so the motion model gives little on DAVIS.
     """
 
     name = "dino_cv"
 
-    def __init__(self, vis_threshold=0.5, search_radius=3, tau=0.05, refine_radius=1, **feature_kwargs):
+    def __init__(self, vis_threshold=0.75, search_radius=6, tau=0.01, refine_radius=1, **feature_kwargs):
         self.vis_threshold = vis_threshold
         self.search_radius = search_radius
         self.tau = tau
